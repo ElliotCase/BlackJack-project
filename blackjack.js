@@ -7,28 +7,39 @@ let playerScore = 0;
 let updatedScore = 0;
 let updatedScore2 = 0;
 let playerScoreUpdated = 0;
+let dealerScore = 0;
 let updatedFinalScore = 0;
+
 function startGame() {
   drawOneCard(playerHand);
   drawOneCard(playerHand);
-  playerScore = calculateHandScore(playerHandScore, playerHand);
-  console.log(`Starting Player cards = ${playerHand}  score = ${playerScore}`);
-  drawOneCard(dealerHand);
-  drawOneCard(dealerHand);
-
-  let dealerScore = calculateHandScore(dealerHandScore, dealerHand);
-  // console.log(`Starting Dealer cards = ${dealerHand}  score = ${dealerScore}`);
-
-  playerScoreUpdated = drawAgain(
-    playerScore,
-    playerHand,
-    playerHandScore,
-    updatedScore
+  playerScoreUpdated = calculateHandScore(playerHandScore, playerHand);
+  console.log(
+    `Starting Player cards = ${playerHand}  score = ${playerScoreUpdated}`
   );
-  logEndScore();
+  drawOneCard(dealerHand);
+  drawOneCard(dealerHand);
+  dealerScore = calculateHandScore(dealerHandScore, dealerHand);
+  console.log(`Starting Dealer cards = ${dealerHand}  score = ${dealerScore}`);
 
-  checkIfBust(playerScoreUpdated, playerHand);
-  checkIfBust(playerScoreUpdated, playerHand);
+  while (playerScoreUpdated < 17) {
+    drawOneCard(playerHand);
+    console.log(playerHand);
+    playerScoreUpdated = calculateHandScore(playerHandScore, playerHand);
+    console.log(playerScoreUpdated);
+  }
+  while (dealerScore < 17 && playerScoreUpdated <= 21) {
+    drawOneCard(dealerHand);
+    console.log(dealerHand);
+    dealerScore = calculateHandScore(dealerHandScore, dealerHand);
+    console.log(dealerScore);
+  }
+  logEndScore("player", playerScoreUpdated);
+  logEndScore("dealer", dealerScore);
+
+  checkIfBust(playerScoreUpdated, "player");
+  checkIfBust(dealerScore, "dealer");
+  findWinner();
 }
 
 startGame();
@@ -117,32 +128,28 @@ drawing another card for the player`);
   return newScore;
 }
 
-function checkIfBust(e, r) {
+function checkIfBust(e, who) {
   if (e > 21) {
     console.log(`
     
-The New Score for player is ${playerScoreUpdated}`);
+The New Score for ${who} is ${e}`);
 
-    console.log("player is bust you lose");
+    console.log(`${who} is bust `);
     return;
-  } else if (e < 17) {
-    console.log("drawing another card for the player");
-
-    drawOneCard(r);
-    console.log(r[r.length - 1]);
-    playerScoreUpdated = calculateHandScore(playerHandScore, playerHand);
-    console.log(playerScoreUpdated);
-    if (playerScoreUpdated < 21) {
-      console.log(`
-    
-    The New Score for player is ${playerScoreUpdated}`);
-    }
   }
   return;
 }
 
-function logEndScore() {
-  if (playerScoreUpdated > 17 && playerScoreUpdated < 21) {
-    console.log(`Player End Score = ${playerScoreUpdated}`);
+function logEndScore(who, score) {
+  if (score >= 17 && score <= 21) {
+    console.log(`${who} End Score = ${score}`);
+  }
+}
+
+function findWinner() {
+  if (playerScoreUpdated > dealerScore && playerScoreUpdated <= 21) {
+    console.log("The Player is the winner!");
+  } else {
+    console.log("The Dealer is the winner!");
   }
 }
