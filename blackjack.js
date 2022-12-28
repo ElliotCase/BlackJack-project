@@ -51,8 +51,7 @@ startGame();
 
 ///////////// Game Functions
 
-/*function to draw one card, adds card to array 'firstTimeCards' checks if card exsits in 'firstTimeCards'already and if so
-draws a new card.*/
+/*function to draw one card, adds card to array 'firstTimeCards' checks if card exsits in 'firstTimeCards' already and if so draws a new card. Then adds card to the player/dealers hand*/
 function drawOneCard(whosDeck) {
   for (let i = 0; i < 1; i++) {
     const cards = ["Ace", 2, 3, 4, 5, 6, 7, 8, 9, 10, "Jack", "Queen", "King"];
