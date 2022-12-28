@@ -31,9 +31,6 @@ function startGame() {
   // The players score is now over 17 log out the final players score
   logEndScore("player", playerScore);
   console.log("");
-  console.log("");
-  console.log("");
-  console.log("");
 
   //While the dealers score is under 17 and the player did not bust, keep drawing one card at a time
   //Logging each card and the new score
@@ -43,7 +40,7 @@ function startGame() {
     dealerScore = calculateHandScore(dealerHandScore, dealerHand);
     console.log(`The dealers score is now ${dealerScore}`);
   }
-
+  console.log("");
   playerScore = calculateHandScore(playerHandScore, playerHand);
   logEndScore("dealer", dealerScore);
   checkIfBust(playerScore, "player");
@@ -80,7 +77,7 @@ function checkIfArrayIsUnique(myArray) {
   return myArray.length === new Set(myArray).size;
 }
 
-//function to check the score if the hand has an ace which would cause them to bust change the ace value to 1
+//function to check the score, if the hand has an ace which would cause them to bust change the ace value to 1
 function calculateHandScore(score, whosHand) {
   for (let i = 0; i < whosHand.length; i++) {
     if (whosHand[i].includes("Ace")) {
@@ -136,9 +133,11 @@ function findWinner() {
     );
   } else if (playerScore == dealerScore) {
     console.log(
-      `The game ends in a draw player and dealer  had a score of ${playerScore}`
+      `The game ends in a draw player and dealer had a score of ${playerScore}`
     );
   } else {
-    console.log(`The Dealer is the winner! With a score of ${dealerScore}`);
+    console.log(
+      `The Dealer is the winner! With a score of ${dealerScore} while the player had a score of ${playerScore}`
+    );
   }
 }
